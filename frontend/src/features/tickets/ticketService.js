@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const APL_URL = '/api/tickets/'
+const API_URL = '/api/tickets/'
 
 //create New Ticket
 
@@ -11,7 +11,7 @@ const createTicket = async (ticketData, token) => {
         }
     }
 
-    const response = axios.post(APL_URL, ticketData, config)
+    const response = await axios.post(API_URL, ticketData, config)
 
     console.log(ticketData);
 
@@ -19,7 +19,7 @@ const createTicket = async (ticketData, token) => {
 
 }
 
-//Get user ticket
+//Get user tickets
 
 const getTickets = async (token) => {
     const config = {
@@ -28,7 +28,34 @@ const getTickets = async (token) => {
         }
     }
 
-    const response = axios.get(APL_URL, config)
+    const response = await axios.get(API_URL, config)
+
+    return response.data
+}
+
+//Get user ticket
+
+const getTicket = async (tickedId, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.get(API_URL + tickedId, config)
+
+    return response.data
+}
+
+//Close ticket
+const closeTicket = async (tickedId, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.put(API_URL + tickedId, { status: 'closed' }, config)
 
     return response.data
 }
@@ -36,7 +63,9 @@ const getTickets = async (token) => {
 
 const ticketService = {
     createTicket,
-    getTickets
+    getTickets,
+    getTicket,
+    closeTicket
 }
 
 export default ticketService

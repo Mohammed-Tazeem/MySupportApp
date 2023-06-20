@@ -8,7 +8,7 @@ const noteRouter = require('./noteRoutes')
 
 
 // ReRoute into NoteRouter
-router.use('/:tickedId/notes', noteRouter)
+router.use('/:ticketId/notes', noteRouter)
 
 router.route('/').get(protect, getTickets).post(protect, createTicket)
 

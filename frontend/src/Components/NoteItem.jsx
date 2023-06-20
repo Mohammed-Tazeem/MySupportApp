@@ -9,9 +9,10 @@ function NoteItem({ note }) {
         }}>
             
            <h4>Note From {note.isStaff ? <span>Staff</span> : <span>{user.name}</span>}</h4>
-           <p className='note-date'>
+           <p>{note.text}</p>
+           <div className='note-date'>
             {new Date(note.createdAt).toLocaleString('en-US')}
-           </p>
+           </div>
         </div>
     )
 }

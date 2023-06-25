@@ -13,13 +13,22 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
-app.get('/api/users/', (req, res) => {
-    res.json('Hello')
-})
-
 // Routes
 app.use('/api/users', require('./routes/userRoutes'))
 app.use('/api/tickets', require('./routes/ticketRoutes'))
+
+// Server Frontend
+if (process.env.NODE_ENV == 'production') {
+
+    // Set build Folder
+    app.use(express.static(path.join(__dirname, '../frontend/build')))
+
+    app.get('*', (req, res) => res.sendFile(__dirname, '../', 'frontend', 'build', 'index.html'))
+} else {
+    app.get('/', (req, res) => {
+        res.status(200).json({ message: 'Aapta Kat chuka hai' })
+    })
+}
 
 app.use(errorHandler)
 
